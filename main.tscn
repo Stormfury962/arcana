@@ -1,14 +1,300 @@
-[gd_scene load_steps=3 format=3 uid="uid://5e1fix4y5cr"]
+[gd_scene load_steps=13 format=3 uid="uid://5e1fix4y5cr"]
 
 [ext_resource type="Script" path="res://Card_Manager.gd" id="1_tp60i"]
-[ext_resource type="PackedScene" uid="uid://bot1aman2kom4" path="res://BaseCard.tscn" id="2_s0wuu"]
+[ext_resource type="Script" path="res://DeckManager.gd" id="2_deckmgr"]
+[ext_resource type="Script" path="res://HandManager.gd" id="3_i7t71"]
+[ext_resource type="Script" path="res://TargetingReticle.gd" id="4_reticle"]
+[ext_resource type="Texture2D" uid="uid://2yiepa3yxd6i" path="res://Frame_2_1.png" id="4_xp6wu"]
+[ext_resource type="Script" path="res://Enemy.gd" id="5_enemy"]
+[ext_resource type="Script" path="res://TurnManager.gd" id="6_turnmgr"]
+[ext_resource type="Script" path="res://ResourceManager.gd" id="7_resmgr"]
+[ext_resource type="Script" path="res://ResourceUI.gd" id="8_resui"]
+[ext_resource type="Script" path="res://RewardUI.gd" id="9_rewardui"]
+[ext_resource type="Texture2D" uid="uid://4txs688sf3vw" path="res://jester_png.png" id="10_sp2wb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy"]
+size = Vector2(160, 220)
 
 [node name="Main" type="Node2D"]
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Table" type="Sprite2D" parent="."]
+position = Vector2(569, 335)
+texture = ExtResource("4_xp6wu")
+
+[node name="Resource Manager" type="Node2D" parent="."]
+script = ExtResource("7_resmgr")
+
+[node name="Turn Manager" type="Node2D" parent="."]
+script = ExtResource("6_turnmgr")
+
+[node name="Deck Manager" type="Node2D" parent="."]
+script = ExtResource("2_deckmgr")
+
+[node name="Card Manager" type="Node2D" parent="."]
 script = ExtResource("1_tp60i")
 
-[node name="Card" parent="Node2D" instance=ExtResource("2_s0wuu")]
+[node name="Player Hand" type="Node2D" parent="."]
+script = ExtResource("3_i7t71")
 
-[node name="Card2" parent="Node2D" instance=ExtResource("2_s0wuu")]
-position = Vector2(441, -5)
+[node name="Targeting Reticle" type="Node2D" parent="."]
+script = ExtResource("4_reticle")
+
+[node name="Training Dummy" type="Area2D" parent="."]
+position = Vector2(576, 170)
+script = ExtResource("5_enemy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Training Dummy"]
+shape = SubResource("RectangleShape2D_enemy")
+
+[node name="Sprite2D" type="Sprite2D" parent="Training Dummy"]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("10_sp2wb")
+
+[node name="Label" type="Label" parent="Training Dummy"]
+offset_left = -100.0
+offset_top = 110.0
+offset_right = 100.0
+offset_bottom = 150.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IntentLabel" type="Label" parent="Training Dummy"]
+offset_left = -100.0
+offset_top = -130.0
+offset_right = 100.0
+offset_bottom = -90.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ResourceUI" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 500.0
+offset_bottom = 200.0
+script = ExtResource("8_resui")
+
+[node name="ManaLabel" type="Label" parent="UI/ResourceUI"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 25.0
+offset_right = 200.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 20
+text = "MANA: 3 / 3"
+
+[node name="HealthLabel" type="Label" parent="UI/ResourceUI"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 25.0
+offset_right = 360.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 20
+text = "HP: 50 / 50"
+
+[node name="BlockLabel" type="Label" parent="UI/ResourceUI"]
+visible = false
+layout_mode = 0
+offset_left = 370.0
+offset_top = 25.0
+offset_right = 470.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 20
+text = "[🛡️ 5]"
+
+[node name="TensionBar" type="ProgressBar" parent="UI/ResourceUI"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 75.0
+offset_right = 360.0
+offset_bottom = 110.0
+value = 50.0
+show_percentage = false
+
+[node name="TensionLabel" type="Label" parent="UI/ResourceUI/TensionBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 15
+text = "TENSION: 50 / 100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EndTurnButton" type="Button" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -80.0
+offset_right = -30.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "End Turn"
+
+[node name="RewardUI" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_rewardui")
+
+[node name="Panel" type="Panel" parent="UI/RewardUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -180.0
+offset_right = 220.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="UI/RewardUI/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 20.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 26
+text = "VICTORY!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GoldLabel" type="Label" parent="UI/RewardUI/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 65.0
+offset_bottom = 95.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 16
+text = "Gold: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GoldButton" type="Button" parent="UI/RewardUI/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -70.0
+offset_right = 160.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+text = "💰 Claim 25 Gold"
+
+[node name="CardButton" type="Button" parent="UI/RewardUI/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_right = 160.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+text = "🃏 Choose a Card Reward"
+
+[node name="ContinueButton" type="Button" parent="UI/RewardUI/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -65.0
+offset_right = 120.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "Next Combat"
+
+[node name="CardPickerPanel" type="Panel" parent="UI/RewardUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -200.0
+offset_right = 340.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="UI/RewardUI/CardPickerPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 15.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 22
+text = "SELECT A CARD REWARD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/RewardUI/CardPickerPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -120.0
+offset_right = 300.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="SkipButton" type="Button" parent="UI/RewardUI/CardPickerPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -45.0
+offset_right = 100.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 16
+text = "Skip Card Reward"
+
+[connection signal="pressed" from="UI/EndTurnButton" to="Turn Manager" method="_on_end_turn_button_pressed"]
+[connection signal="pressed" from="UI/RewardUI/Panel/GoldButton" to="UI/RewardUI" method="_on_gold_button_pressed"]
+[connection signal="pressed" from="UI/RewardUI/Panel/CardButton" to="UI/RewardUI" method="_on_card_button_pressed"]
+[connection signal="pressed" from="UI/RewardUI/Panel/ContinueButton" to="UI/RewardUI" method="_on_continue_button_pressed"]
+[connection signal="pressed" from="UI/RewardUI/CardPickerPanel/SkipButton" to="UI/RewardUI" method="_on_skip_card_pressed"]

@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://5e1fix4y5cr"]
+
+[ext_resource type="Script" path="res://Card_Manager.gd" id="1_tp60i"]
+[ext_resource type="Script" path="res://DeckManager.gd" id="2_deckmgr"]
+[ext_resource type="Script" path="res://HandManager.gd" id="3_i7t71"]
+[ext_resource type="Script" path="res://TargetingReticle.gd" id="4_reticle"]
+[ext_resource type="Texture2D" uid="uid://2yiepa3yxd6i" path="res://Frame_2_1.png" id="4_xp6wu"]
+[ext_resource type="Script" path="res://Enemy.gd" id="5_enemy"]
+[ext_resource type="Script" path="res://TurnManager.gd" id="6_turnmgr"]
+[ext_resource type="Texture2D" uid="uid://4txs688sf3vw" path="res://jester_png.png" id="7_sp2wb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy"]
+size = Vector2(160, 220)
+
+[node name="Main" type="Node2D"]
+
+[node name="Turn Manager" type="Node2D" parent="."]
+script = ExtResource("6_turnmgr")
+
+[node name="Deck Manager" type="Node2D" parent="."]
+script = ExtResource("2_deckmgr")
+
+[node name="Card Manager" type="Node2D" parent="."]
+script = ExtResource("1_tp60i")
+
+[node name="Player Hand" type="Node2D" parent="."]
+script = ExtResource("3_i7t71")
+
+[node name="Targeting Reticle" type="Node2D" parent="."]
+script = ExtResource("4_reticle")
+
+[node name="Training Dummy" type="Area2D" parent="."]
+position = Vector2(576, 160)
+script = ExtResource("5_enemy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Training Dummy"]
+shape = SubResource("RectangleShape2D_enemy")
+
+[node name="Sprite2D" type="Sprite2D" parent="Training Dummy"]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_sp2wb")
+
+[node name="Label" type="Label" parent="Training Dummy"]
+offset_left = -100.0
+offset_top = 110.0
+offset_right = 100.0
+offset_bottom = 150.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="EndTurnButton" type="Button" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -80.0
+offset_right = -30.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "End Turn"
+
+[node name="Table" type="Sprite2D" parent="."]
+position = Vector2(539, 304)
+texture = ExtResource("4_xp6wu")
+
+[connection signal="pressed" from="UI/EndTurnButton" to="Turn Manager" method="_on_end_turn_button_pressed"]

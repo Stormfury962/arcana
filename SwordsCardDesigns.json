@@ -1,0 +1,59 @@
+{
+    "Ace":{
+        "Cost": 1,
+        "Effect": "Set your tension to 50. Draw until you have 10 cards in hand"
+    },
+    "Two":{
+        "Code Name": "Choice Making",
+        "Cost": 1,
+        "Effect": "Exhaust a card. Something about making a choice"
+    },
+    "Three":{
+        "Cost": 0,
+        "Effect": "Add a Confusion, Doubt, and Pain to your discard pile. Gain 3 Strength. Zone: Draw 3 Cards "
+    },
+    "Four":{
+        "Cost": 2,
+        "Effect": "Exhaust a card. Gain 15 block. Decrease Tension by 15. Zone: Gain 2 Energy"
+    },
+    "Five":{
+        "Cost": 2,
+        "Effect": "Deal 16 damage. Zone: Deal 16 damage"
+    },
+    "Six":{
+        "Cost": 1,
+        "Effect": "Transform up to 5 cards in your deck."
+    },
+    "Seven":{
+        "Cost": 0,
+        "Effect": "Add a Deceit to your draw pile. If you have no energy, gain 2 energy. If you have no cards in hand, draw 2 cards. Zone: Exhaust all deceits in your deck."
+    },
+    "Eight":{
+        "Cost": 1,
+        "Type": "Power",
+        "Effect": "Add a Doubt to your deck. Whenever you draw a status, draw an additional card and deal 6 damage to each enemy"
+    },
+    "Nine":{
+        "Code Name": "Cycle Breaker",
+        "Cost": 2,
+        "Effect": "Deal 6 damage. Zone: Stun the enemy."
+    },
+    "Ten":{
+        "Cost": 3,
+        "Effect": "Increase tension by 50. Deal 25 damage."
+    },
+    "Jack":{
+        "Cost": 1,
+        "Type":"Power",
+        "Effect": "Whenever you exhaust or transform a card, gain one strength."
+    },
+    "Queen":{
+        "Cost": 1,
+        "Effect": "Exhaust each status card in your deck. Gain 4 block for each status card exhausted this way."
+    },
+    "King":{
+        "Cost": 3,
+        "Type": "Power",
+        "Effect": "At the start of each turn, exhaust 1 card. Set your Tension to 50."
+    }
+}

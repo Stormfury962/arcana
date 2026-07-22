@@ -66,6 +66,12 @@ func update_card_visuals() -> void:
 			text = "(%d) %s" % [card_data["cost"], card_data["name"]]
 		name_label.text = text
 		
+		# Highlight upgraded cards with a vibrant green header font
+		if card_data.get("is_upgraded", false):
+			name_label.add_theme_color_override("font_color", Color(0.35, 1.0, 0.45, 1.0))
+		else:
+			name_label.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 1.0))
+		
 	# Body Text: Human-readable Description
 	if desc_label:
 		if card_data.has("description"):

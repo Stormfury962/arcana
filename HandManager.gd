@@ -7,7 +7,8 @@ extends Node2D
 
 # Fan Layout configuration parameters
 @export var hand_center_offset: Vector2 = Vector2(0, 30)
-@export var max_fan_angle_deg: float = 24.0 # Total spread angle (-12 deg to +12 deg)
+@export var max_fan_angle_deg: float = 24.0 # Maximum total fan spread angle for a full hand (-12 deg to +12 deg)
+@export var angle_per_card_deg: float = 5.0 # Angle step per card in hand (scales angle down for smaller hands)
 @export var max_card_spacing: float = 120.0
 @export var max_hand_width: float = 650.0
 @export var curve_height: float = 35.0 # Vertical drop at hand edges for fan arc
@@ -142,10 +143,14 @@ func update_hand_positions(animate: bool = true) -> void:
 	var spacing = total_width / max(1, count - 1) if count > 1 else 0.0
 	var start_x = hand_center.x - (total_width / 2.0) if count > 1 else hand_center.x
 	
-	# Calculate rotation angles across the fan
-	var max_angle_rad = deg_to_rad(max_fan_angle_deg)
-	var angle_step = (max_angle_rad * 2.0) / max(1, count - 1) if count > 1 else 0.0
-	var start_angle = -max_angle_rad if count > 1 else 0.0
+	# Dynamically calculate fan rotation angle based on card count (gentler tilt for smaller hands)
+	var current_fan_angle_deg = min(max_fan_angle_deg, (count - 1) * angle_per_card_deg) if count > 1 else 0.0
+	var half_angle_rad = deg_to_rad(current_fan_angle_deg / 2.0)
+	var angle_step = (half_angle_rad * 2.0) / (count - 1) if count > 1 else 0.0
+	var start_angle = -half_angle_rad if count > 1 else 0.0
+	
+	# Scale vertical arc curve height proportionally with fan angle spread
+	var effective_curve_height = curve_height * (current_fan_angle_deg / max_fan_angle_deg) if max_fan_angle_deg > 0 else 0.0
 	
 	for i in range(count):
 		var card = card_nodes[i]
@@ -157,7 +162,7 @@ func update_hand_positions(animate: bool = true) -> void:
 		
 		# Position calculation (Horizontal spread + Parabolic Vertical Arc)
 		var pos_x = start_x + (i * spacing) if count > 1 else hand_center.x
-		var pos_y = hand_center.y + (normalized_offset * normalized_offset * curve_height)
+		var pos_y = hand_center.y + (normalized_offset * normalized_offset * effective_curve_height)
 		var target_pos = Vector2(pos_x, pos_y)
 		
 		# Fan Rotation

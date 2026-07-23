@@ -1,0 +1,59 @@
+{
+    "Minor Arcana":{
+        "Ace":{
+            "Cost": 0,
+            "Effect": "Enter Overwhelmed. Gain 3 Energy. Exhaust."
+        },
+        "Two":{
+            "Cost": 1,
+            "Effect": "Apply 7 Ignite. When that enemy dies, apply its ignite to EVERYONE"
+        },
+        "Three":{
+            "Cost": 2,
+            "Effect": "Deal 10 damage to all enemies. Overwhelm: Add a ?? to your deck."
+        },
+        "Four":{
+            "Cost": 2,
+            "Effect": "Overwhelm. Gain 15 Block"
+        },
+        "Five":{
+            "Cost": 1,
+            "Effect": "Overwhelm. Enter Overwhelmed. Your Overwhelm persists for one turn."
+        },
+        "Six":{
+            "Cost": 2,
+            "Effect": "Target enemy takes damage equal to their ignite."
+        },
+        "Seven":{
+            "Cost": 0,
+            "Type":"Power",
+            "Effect": "The next time you would die this combat, Banish this card from your deck. Revive at 50% HP."
+        },
+        "Eight":{
+            "Cost": 0,
+            "Effect": "Add a Doubt to your deck. Whenever you draw a status, draw an additional card and deal 6 damage to each enemy"
+        },
+        "Nine":{
+            "Code Name": "Cycle Breaker",
+            "Cost": 2,
+            "Effect": "Deal 6 damage. Zone: Stun the enemy."
+        },
+        "Ten":{
+            "Cost": 3,
+            "Effect": "Increase tension by 60. Zone: Apply 2 Vulnerable; Deal 25 damage."
+        },
+        "Jack":{
+            "Cost": 2,
+            "Effect": "Increase tension by 25. Deal 15 damage to EVERYONE."
+        },
+        "Queen":{
+            "Cost": 2,
+            "Effect": "Deal 5 damage to all enemies. Overwhelm: Gain life equal to the damage dealt"
+        },
+        "King":{
+            "Cost": 3,
+            "Type": "Power",
+            "Effect": "At the start of each turn, increase tension by 25. Deal 3x damage in the Overwhelmed state."
+        }
+    }
+}
